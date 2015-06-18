@@ -56,26 +56,9 @@ public class CalcServer {
         if(request.getOperation()!=CalcOperation.SET_VALUE) {
             oldValue = numbersMap.get(currentClientId);
         }
-        switch(request.getOperation()) {
-            case MULTIPLY:
-                newValue = oldValue * request.getNumber();
-                break;
-            case DIVIDE:
-                newValue = oldValue / request.getNumber();
-                break;
-            case ADD:
-                newValue = oldValue + request.getNumber();
-                break;
-            case SUBSTRUCT:
-                newValue = oldValue - request.getNumber();
-                break;
-            case SET_VALUE:
-                newValue = request.getNumber();
-                break;
-            case GET_VALUE:
-                newValue = oldValue;
-                break;
-        }
+
+        newValue = request.getOperation().calculate(oldValue, request.getNumber());
+
         if(request.getOperation()!=CalcOperation.GET_VALUE) {
             numbersMap.put(currentClientId, newValue);
         }
