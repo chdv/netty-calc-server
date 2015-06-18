@@ -51,13 +51,13 @@ public class CalcServer {
         if(currentClientId == 0) {
             currentClientId = lastClientId.incrementAndGet();
         }
-        long newValue = 0;
+
         long oldValue = 0;
         if(request.getOperation()!=CalcOperation.SET_VALUE) {
             oldValue = numbersMap.get(currentClientId);
         }
 
-        newValue = request.getOperation().calculate(oldValue, request.getNumber());
+        long newValue = request.getOperation().calculate(oldValue, request.getNumber());
 
         if(request.getOperation()!=CalcOperation.GET_VALUE) {
             numbersMap.put(currentClientId, newValue);
