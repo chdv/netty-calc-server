@@ -1,0 +1,22 @@
+package com.dch.app.calc;
+
+message CalcRequest {
+    optional int64 clientId = 1;
+    optional int64 number = 2;
+    required CalcOperation operation = 3;
+}
+
+enum CalcOperation {
+    MULTIPLY = 1;
+    DIVIDE = 2;
+    ADD = 3;
+    SUBSTRUCT = 4;
+    SET_VALUE = 5;
+    GET_VALUE = 6;
+}
+
+message CalcResponse {
+    optional int64 clientId = 1;
+    optional int64 number = 2;
+    optional string error = 3;
+}
