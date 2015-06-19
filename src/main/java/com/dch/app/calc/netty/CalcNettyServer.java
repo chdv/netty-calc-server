@@ -1,6 +1,7 @@
 package com.dch.app.calc.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -45,9 +46,11 @@ public class CalcNettyServer {
              .handler(new LoggingHandler(LogLevel.INFO))
              .childHandler(new CalcServerInitializer(sslCtx));
 
+            Channel ch = b.bind(PORT).sync().channel();
+
             logger.debug("Server init");
 
-            b.bind(PORT).sync().channel().closeFuture().sync();
+            ch.closeFuture().sync();
 
         } finally {
             bossGroup.shutdownGracefully();
