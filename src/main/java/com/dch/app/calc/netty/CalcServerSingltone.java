@@ -34,17 +34,16 @@ public enum CalcServerSingltone {
 
     public void calculate(ChannelHandlerContext ctx, CalcProtocol.CalcRequest request) {
         if(CALC_ASYNC) {
-            executor.execute(() -> {
-                pause();
-                ctx.write(Calculator.calculate(request));
-                ctx.flush();
-                calcRequestsCount();
-            });
+            executor.execute(()->calc(ctx, request));
         } else {
-            pause();
-            ctx.write(Calculator.calculate(request));
-            calcRequestsCount();
+            calc(ctx, request);
         }
+    }
+
+    private void calc(ChannelHandlerContext ctx, CalcProtocol.CalcRequest request) {
+        pause();
+        ctx.writeAndFlush(Calculator.calculate(request));
+        calcRequestsCount();
     }
 
     private void pause() {
