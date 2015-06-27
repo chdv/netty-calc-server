@@ -162,8 +162,23 @@ public class CalcNettyClient {
         }
     }
 
+
+    public static void runOneClient() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    new CalcNettyClient().doRequests();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
     public static void main(String[] args) throws Exception {
-        runManyClients();
+        runOneClient();
     }
 
 }

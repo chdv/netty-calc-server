@@ -25,6 +25,7 @@ public class CalcNettyServer {
 
     static final boolean SSL = true;//System.getProperty("ssl") != null;
     static final int PORT = Integer.parseInt(System.getProperty("port", "8463"));
+    static final int LOOP_THREADS_COUNT = Runtime.getRuntime().availableProcessors();
     private SslContext sslCtx;
 
     public CalcNettyServer() throws SSLException, InterruptedException, CertificateException {
@@ -38,7 +39,7 @@ public class CalcNettyServer {
 
     public void startServer() throws InterruptedException {
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        EventLoopGroup workerGroup = new NioEventLoopGroup(LOOP_THREADS_COUNT);
         try {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)

@@ -23,18 +23,4 @@ public class ClientServerMain {
         CalcNettyClient.runManyClients();
     }
 
-    private static void runOneClient() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    new CalcNettyClient().doRequests();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
-    }
-
 }
