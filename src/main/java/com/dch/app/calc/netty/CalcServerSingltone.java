@@ -41,12 +41,12 @@ public enum CalcServerSingltone {
     }
 
     private void calc(ChannelHandlerContext ctx, CalcProtocol.CalcRequest request) {
-        pause();
+        pauseIfNeed();
         ctx.writeAndFlush(Calculator.calculate(request));
         calcRequestsCount();
     }
 
-    private void pause() {
+    private void pauseIfNeed() {
         if(CALC_SLEEP > 0) {
             try {
                 Thread.sleep(CALC_SLEEP);
